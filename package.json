@@ -1,0 +1,20 @@
+{
+  "name": "chelsea",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "git submodule init",
+    "start": "npm start --prefix packages/one-app -- --root-module-name=chelsea-root",
+    "serve-module": "npm run serve-module --prefix packages/one-app"
+  },
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "modules/*",
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/core-js"
+    ]
+  }
+}

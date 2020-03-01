@@ -1,0 +1,3 @@
+[submodule "packages/one-app"]
+	path = packages/one-app
+	url = https://github.com/americanexpress/one-app.git
