@@ -20,4 +20,15 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - run: yarn install
+    - name: install node packages
+      run: yarn install
+      env:
+        NODE_ENV: production
+    - name: Build packages and modules
+      run: yarn workspaces run build
+      env:
+        NODE_ENV: production
+    - uses: actions/upload-artifact@v1
+      with:
+        name: api-artifact
+        path: packages/api/index.js
