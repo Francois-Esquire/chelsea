@@ -40,7 +40,7 @@
   },
   "one-amex": {
     "bundler": {
-      "performanceBudget": 900e3
+      "performanceBudget": 1200e3
     }
   }
 }
