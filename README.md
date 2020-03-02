@@ -1,5 +1,7 @@
 # Chelsea
 
+![CI](https://github.com/Francois-Esquire/chelsea/workflows/CI/badge.svg?event=push)
+
 Project setup using One App with `yarn` workspaces
 
 ## Quick start
