@@ -11,7 +11,7 @@ describe('Chelsea', () => {
   });
 
   it('module should render correct JSX', () => {
-    const renderedModule = shallow(<Chelsea />);
+    const renderedModule = shallow(<Chelsea store={{ dispatch: jest.fn(), getState: jest.fn({ toJS: jest.fn({}) }) }} />);
     expect(toJson(renderedModule)).toMatchSnapshot();
   });
 

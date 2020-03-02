@@ -26,8 +26,6 @@ const Chelsea = ({
     return <p>Oh no! Something went wrong</p>;
   }
 
-  console.log(moduleState);
-
   return (
     <React.Fragment>
       <Styles />
