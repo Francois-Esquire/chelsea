@@ -1,5 +1,5 @@
 {
-  "name": "chelsea-root",
+  "name": "chelsea-scene",
   "version": "1.0.0",
   "description": "",
   "contributors": [],
@@ -15,19 +15,12 @@
   "dependencies": {
     "@americanexpress/one-app-bundler": "^6.0.0",
     "@americanexpress/one-app-router": "^1.0.0",
-    "@emotion/core": "^10.0.28",
     "content-security-policy-builder": "^2.1.0",
     "holocron": "^1.0.0",
-    "holocron-module-route": "^1.0.0",
-    "iguazu": "3.0.0-3",
-    "iguazu-graphql": "^1.2.0",
-    "iguazu-holocron": "^1.0.0",
     "ip": "^1.1.5",
-    "prop-types": "^15.7.2",
     "react": "^16.12.0",
-    "react-redux": "^7.2.0",
-    "redux": "^4.0.5",
-    "redux-immutable": "^4.0.0"
+    "react-three-fiber": "^4.0.19",
+    "three": "^0.114.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",

@@ -25,7 +25,6 @@ export default contentSecurityPolicyBuilder({
       "'self'",
       `${ip.address()}:${process.env.HTTP_ONE_APP_DEV_CDN_PORT || 3001}`,
       `localhost:${process.env.HTTP_ONE_APP_DEV_CDN_PORT || 3001}`,
-      'localhost:4000',
     ],
   },
 });
