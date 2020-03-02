@@ -25,9 +25,13 @@ jobs:
       env:
         NODE_ENV: development
     - name: Build packages and modules
-      run: yarn workspaces run build
+      run: yarn workspace chelsea-api run build
       env:
         NODE_ENV: production
+    # - name: Build packages and modules
+    #   run: yarn workspaces run build
+    #   env:
+    #     NODE_ENV: production
     - uses: actions/upload-artifact@v1
       with:
         name: api-artifact
