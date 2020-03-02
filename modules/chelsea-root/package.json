@@ -46,5 +46,10 @@
       "./enzyme.config.js",
       "./jest.setup.js"
     ]
+  },
+  "one-amex": {
+    "bundler": {
+      "performanceBudget": 900e3
+    }
   }
 }
