@@ -25,13 +25,24 @@ jobs:
       env:
         NODE_ENV: development
     - name: Build packages and modules
-      run: yarn workspace chelsea-api run build
+      run: yarn workspaces run build
       env:
         NODE_ENV: production
-    # - name: Build packages and modules
-    #   run: yarn workspaces run build
-    #   env:
-    #     NODE_ENV: production
+    - name: Publish GraphQL API to Registry
+      uses: HurricanKai/Publish-Docker-Github-Action@master
+      with:
+        name: michaeltobia/chelsea-graphql-api
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: packages/api/Dockerfile
+    - name: Publish One App to Registry
+      uses: HurricanKai/Publish-Docker-Github-Action@master
+      with:
+        name: michaeltobia/one-app
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: packages/one-app/Dockerfile
+        cache: true
     - uses: actions/upload-artifact@v1
       with:
         name: api-artifact

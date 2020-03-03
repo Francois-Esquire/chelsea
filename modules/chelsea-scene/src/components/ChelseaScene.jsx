@@ -1,17 +1,19 @@
 import React from 'react';
 import { Route } from '@americanexpress/one-app-router';
 
-import Scene from './Scene';
+const Scene = React.lazy(() => import(/* webpackChunkName: "Scene" */ './Scene'));
 
 const ChelseaScene = () => (
-  <Scene />
+  <React.Suspense fallback={null}>
+    <Scene />
+  </React.Suspense>
 );
 
 // Read about childRoutes:
 // https://github.com/americanexpress/one-app/blob/master/docs/api/modules/Routing.md#childroutes
-ChelseaScene.childRoutes = () => ([
+ChelseaScene.childRoutes = () => [
   <Route path="/" />,
-]);
+];
 
 // Read about appConfig:
 // https://github.com/americanexpress/one-app/blob/master/docs/api/modules/App-Configuration.md

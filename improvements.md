@@ -10,7 +10,8 @@
 
 ### Development
 
-- updating modules in local development requires building and re-serving, all the time?
+- ~~updating modules in local development requires building and re-serving, all the time?~~
+`npm run watch:build` or `bundle-module --watch`
 
 ## Lifecycle
 
