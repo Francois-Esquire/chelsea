@@ -42,7 +42,8 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: packages/one-app/Dockerfile
-        cache: true
+        # tried to pull image, fails if no manifest exists of an image
+        # cache: true
     - uses: actions/upload-artifact@v1
       with:
         name: api-artifact
