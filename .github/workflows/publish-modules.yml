@@ -20,7 +20,7 @@ jobs:
         SPACES_ENDPOINT: ${{ secrets.DIGITALOCEAN_SPACES_ENDPOINT }}
         MODULES_ENDPOINT: ${{ secrets.MODULES_ENDPOINT }}
       run: |
-        yarn add aws-sdk
+        yarn add aws-sdk -W
         yarn publish-modules
     - name: Trigger Image Publishing
       uses: octokit/request-action@v2.x
