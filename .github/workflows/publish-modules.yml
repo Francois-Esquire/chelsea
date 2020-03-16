@@ -9,10 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Remove Packages
+      shell: bash
+      run: rm -rf packages
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - name: Install, Build and Publish Modules to Spaces
+    - name: Install Modules
+      env:
+        NODE_ENV: development
+      run: yarn
+    - name: Build Modules
+      env:
+        NODE_ENV: production
+      run: yarn workspaces run build
+    - name: Publish Modules to Spaces
       env:
         NODE_ENV: production
         SPACES_ACCESS_KEY: ${{ secrets.DIGITALOCEAN_SPACES_ACCESS_KEY }}
@@ -20,9 +31,7 @@ jobs:
         SPACES_BUCKET: ${{ secrets.DIGITALOCEAN_SPACES_BUCKET }}
         SPACES_ENDPOINT: ${{ secrets.DIGITALOCEAN_SPACES_ENDPOINT }}
         MODULES_ENDPOINT: ${{ secrets.MODULES_ENDPOINT }}
-      run: |
-        npm install aws-sdk -D
-        yarn publish-modules
+      run: yarn publish-modules
     - name: Trigger Image Publishing
       uses: octokit/request-action@v2.x
       id: dispatch_publish_docker_images

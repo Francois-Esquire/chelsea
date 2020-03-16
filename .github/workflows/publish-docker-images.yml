@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Checkout submodules
+    - name: Checkout Submodules
       shell: bash
       run: |
         # If your submodules are configured to use SSH instead of HTTPS please uncomment the following line
@@ -17,21 +17,23 @@ jobs:
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - name: Remove Modules
+      shell: bash
+      run: rm -rf modules
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - name: install node packages
+    - name: install Packages
       env:
         NODE_ENV: development
       run: |
-        yarn workspace one-app run install
-        yarn workspace chelsea-api run install
-    - name: Build packages and modules
+        yarn submodule-sync
+        yarn
+    - name: Build Packages
       env:
         NODE_ENV: production
       run: |
-        yarn workspace one-app run build
-        yarn workspace chelsea-api run build
+        yarn workspaces run build
     - name: Publish GraphQL API to Registry
       uses: Francois-Esquire/Publish-Docker-Github-Action@master
       with:
