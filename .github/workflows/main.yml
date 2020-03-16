@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    if: "! contains(toJSON(github.event.commits.*.msg), '[skip-ci]')"
     runs-on: ubuntu-latest
     steps:
     - name: Trigger Module Publishing
@@ -19,11 +20,3 @@ jobs:
         event_type: "publish_modules"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
-    # - name: Trigger Deployment
-    #   run: |-
-    #     curl
-    #       -H "Accept: application/vnd.github.everest-preview+json" \
-    #       -H "Authorization: token ${{secrets.GITHUB_ACCESS_TOKEN}}" \
-    #       --request POST \
-    #       --data '{"event_type": "publish_modules"}' \
-    #       https://api.github.com/repos/Francois-Esquire/chelsea/dispatches
