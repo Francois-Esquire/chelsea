@@ -1,0 +1,54 @@
+name: Publish
+
+on:
+  repository_dispatch:
+    types: [publish_docker_images]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Checkout submodules
+      shell: bash
+      run: |
+        # If your submodules are configured to use SSH instead of HTTPS please uncomment the following line
+        # git config --global url."https://github.com/".insteadOf "git@github.com:"
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git submodule sync --recursive
+        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: install node packages
+      env:
+        NODE_ENV: development
+      run: |
+        yarn workspace one-app install
+        yarn workspace chelsea-api install
+    - name: Build packages and modules
+      env:
+        NODE_ENV: production
+      run: |
+        yarn workspace one-app build
+        yarn workspace chelsea-api build
+    - name: Publish GraphQL API to Registry
+      uses: Francois-Esquire/Publish-Docker-Github-Action@master
+      with:
+        name: michaeltobia/chelsea-graphql-api
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: packages/api/Dockerfile
+        dockercontext:  packages/api
+    - name: Publish One App to Registry
+      uses: Francois-Esquire/Publish-Docker-Github-Action@master
+      with:
+        # TODO: pass args to image with holocron module map
+        name: michaeltobia/one-app
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: packages/one-app/Dockerfile
+        dockercontext:  packages/one-app
+        # FIXME: tried to pull image, fails if does not exist
+        cache: true
+    # TODO: trigger job to deploy helm charts

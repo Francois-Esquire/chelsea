@@ -7,6 +7,13 @@ export default gql`
     id: ID!
   }
 
+  type Memory implements Node {
+    id: ID!
+    name: String
+    location: Float
+    players: [Player]
+  }
+
   type Player implements Node {
     id: ID!
     username: String
@@ -15,10 +22,13 @@ export default gql`
 
   type Query {
     me: Player @performance
+    memories: [Memory] @performance
     players: [Player] @performance
   }
 
   type Mutation {
+
+    # player management
     addPlayer(username: String!): Player @performance
     removePlayer(id: ID!): Player @performance
   }

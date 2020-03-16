@@ -1,0 +1,34 @@
+name: Publish
+
+on:
+  repository_dispatch:
+    types: [publish_modules]
+
+jobs:
+  publish_modules:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Install, Build and Publish Modules to Spaces
+      env:
+        SPACES_ACCESS_KEY: ${{ secrets.DIGITALOCEAN_SPACES_ACCESS_KEY }}
+        SPACES_SECRET_KEY: ${{ secrets.DIGITALOCEAN_SPACES_SECRET_KEY }}
+        SPACES_BUCKET: ${{ secrets.DIGITALOCEAN_SPACES_BUCKET }}
+        SPACES_ENDPOINT: ${{ secrets.DIGITALOCEAN_SPACES_ENDPOINT }}
+        MODULES_ENDPOINT: ${{ secrets.MODULES_ENDPOINT }}
+      run: |
+        yarn add aws-sdk
+        yarn publish-modules
+    - name: Trigger Image Publishing
+      uses: octokit/request-action@v2.x
+      id: dispatch_publish_docker_images
+      with:
+        route: POST /repos/:repository/dispatches
+        repository: ${{ github.repository }}
+        mediaType: '{"previews": ["everest"]}'
+        event_type: "publish_docker_images"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}

@@ -1,41 +1,22 @@
-const PlayerFragment = `
-fragment PlayerFragment on Player {
-  __typename
-  id
-  username
-  topScore
-}
-`;
+import { PlayerFragment } from './fragments';
 
-const PlayersQuery = `
-  ${PlayerFragment}
-  query {
-    me {
-      ...PlayerFragment
-    }
-    players {
-      ...PlayerFragment
-    }
-  }
-`;
-
-const AddPlayerMutation = `
+export const AddPlayerMutation = `
   ${PlayerFragment}
   mutation AddPlayer($username: String!) {
     addPlayer(username: $username) {
       ...PlayerFragment
     }
   }
-`;
+`.trim();
 
-const RemovePlayerMutation = `
+export const RemovePlayerMutation = `
   ${PlayerFragment}
   mutation RemovePlayer($id: ID!) {
     removePlayer(id: $id) {
       ...PlayerFragment
     }
   }
-`;
+`.trim();
 
 export const addPlayer = ({ username }) => ({
   mutation: AddPlayerMutation,
@@ -45,8 +26,4 @@ export const addPlayer = ({ username }) => ({
 export const removePlayer = ({ id }) => ({
   mutation: RemovePlayerMutation,
   variables: { id },
-});
-
-export const queryPlayers = () => ({
-  query: PlayersQuery,
 });

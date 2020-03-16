@@ -1,12 +1,12 @@
-name: CI
+name: Deploy
 
-on: [push]
+on:
+  repository_dispatch:
+    types: [deploy_apps]
 
 jobs:
-  build:
-
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
     - name: Save DigitalOcean kubeconfig
       uses: digitalocean/action-doctl@master

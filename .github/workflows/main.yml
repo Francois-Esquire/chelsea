@@ -1,52 +1,29 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Checkout submodules
-      shell: bash
-      run: |
-        # If your submodules are configured to use SSH instead of HTTPS please uncomment the following line
-        # git config --global url."https://github.com/".insteadOf "git@github.com:"
-        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-        git submodule sync --recursive
-        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-    - uses: actions/setup-node@v1
+    - name: Trigger Module Publishing
+      uses: octokit/request-action@v2.x
+      id: dispatch_publish_modules
       with:
-        node-version: '12.x'
-    - name: install node packages
-      run: yarn install
+        route: POST /repos/:repository/dispatches
+        repository: ${{ github.repository }}
+        mediaType: '{"previews": ["everest"]}'
+        event_type: "publish_modules"
       env:
-        NODE_ENV: development
-    - name: Build packages and modules
-      run: yarn workspaces run build
-      env:
-        NODE_ENV: production
-    - name: Publish GraphQL API to Registry
-      uses: Francois-Esquire/Publish-Docker-Github-Action@master
-      with:
-        name: michaeltobia/chelsea-graphql-api
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        dockerfile: packages/api/Dockerfile
-        dockercontext:  packages/api
-    - name: Publish One App to Registry
-      uses: Francois-Esquire/Publish-Docker-Github-Action@master
-      with:
-        name: michaeltobia/one-app
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        dockerfile: packages/one-app/Dockerfile
-        dockercontext:  packages/one-app
-        # tried to pull image, fails if no manifest exists of an image
-        # cache: true
-    - uses: actions/upload-artifact@v1
-      with:
-        name: api-artifact
-        path: packages/api/index.js
+        GITHUB_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+    # - name: Trigger Deployment
+    #   run: |-
+    #     curl
+    #       -H "Accept: application/vnd.github.everest-preview+json" \
+    #       -H "Authorization: token ${{secrets.GITHUB_ACCESS_TOKEN}}" \
+    #       --request POST \
+    #       --data '{"event_type": "publish_modules"}' \
+    #       https://api.github.com/repos/Francois-Esquire/chelsea/dispatches

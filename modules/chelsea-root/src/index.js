@@ -1,3 +1,3 @@
-import ModuleContainer from './components/Chelsea';
+import ModuleContainer from './components';
 
 export default ModuleContainer;
