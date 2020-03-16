@@ -14,13 +14,14 @@ jobs:
         node-version: '12.x'
     - name: Install, Build and Publish Modules to Spaces
       env:
+        NODE_ENV: production
         SPACES_ACCESS_KEY: ${{ secrets.DIGITALOCEAN_SPACES_ACCESS_KEY }}
         SPACES_SECRET_KEY: ${{ secrets.DIGITALOCEAN_SPACES_SECRET_KEY }}
         SPACES_BUCKET: ${{ secrets.DIGITALOCEAN_SPACES_BUCKET }}
         SPACES_ENDPOINT: ${{ secrets.DIGITALOCEAN_SPACES_ENDPOINT }}
         MODULES_ENDPOINT: ${{ secrets.MODULES_ENDPOINT }}
       run: |
-        yarn add aws-sdk -W
+        npm install aws-sdk -D
         yarn publish-modules
     - name: Trigger Image Publishing
       uses: octokit/request-action@v2.x
