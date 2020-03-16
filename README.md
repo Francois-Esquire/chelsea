@@ -9,6 +9,10 @@ Project setup using One App with `yarn` workspaces
 ```bash
 git clone https://github.com/Francois-esquire/chelsea
 
+yarn submodule-sync
+
+export NODE_ENV=production
+
 yarn install
 
 yarn serve-modules

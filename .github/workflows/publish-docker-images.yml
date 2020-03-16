@@ -45,7 +45,7 @@ jobs:
     - name: Publish One App to Registry
       uses: Francois-Esquire/Publish-Docker-Github-Action@master
       with:
-        # TODO: pass args to image with holocron module map
+        # TODO: pass args to image with holocron module map, target, etc
         name: michaeltobia/one-app
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
