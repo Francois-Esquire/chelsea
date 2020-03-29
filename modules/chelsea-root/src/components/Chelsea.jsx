@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from '@americanexpress/one-app-router';
 import ModuleRoute from 'holocron-module-route';
 
 import Styles from './styles';
@@ -41,8 +40,7 @@ Chelsea.defaultProps = {
 };
 
 Chelsea.childRoutes = () => [
-  <Route path="/">
-    <ModuleRoute path="/" moduleName="chelsea-scene" />
-  </Route>,
-  <ModuleRoute path="scene" moduleName="chelsea-scene" />,
+  <ModuleRoute moduleName="chelsea-hud">
+    <ModuleRoute path="scene" moduleName="chelsea-scene" />
+  </ModuleRoute>,
 ];

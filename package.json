@@ -4,13 +4,16 @@
   "license": "MIT",
   "scripts": {
     "submodule-sync": "git submodule sync --recursive && git submodule update --init",
+    "submodule-update": "git submodule foreach git pull origin master",
     "dev:api": "npm start --prefix packages/api",
     "dev:one-app": "npm start --prefix packages/one-app -- --root-module-name=chelsea-root",
     "start": "ONE_CONFIG_ENV=development run-p dev:*",
     "serve-module": "npm run serve-module --prefix packages/one-app",
     "serve-modules": "scripts/serve-modules.sh",
     "build-modules": "scripts/build-modules.sh",
-    "publish-modules": "scripts/publish-modules.sh"
+    "publish-modules": "scripts/publish-modules.sh",
+    "cosmos": "cosmos",
+    "cosmos-export": "cosmos-export"
   },
   "private": true,
   "workspaces": {
@@ -25,8 +28,13 @@
   },
   "devDependencies": {
     "@americanexpress/one-app-bundler": "^6.2.0",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-react": "^7.9.1",
     "aws-sdk": "^2.639.0",
     "core-js": "^3.6.4",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "react": "^16.13.1",
+    "react-cosmos": "^5.1.0",
+    "react-dom": "^16.13.1"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "watchDirs": [
+    "modules/chelsea-hud/src",
+    "modules/chelsea-scene/src",
+    "modules/chelsea-root/src"
+  ]
+}

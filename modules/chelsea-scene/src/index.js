@@ -1,3 +1,3 @@
-import ModuleContainer from './components/ChelseaScene';
+import ModuleContainer from './components';
 
 export default ModuleContainer;
