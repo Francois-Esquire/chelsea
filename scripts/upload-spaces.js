@@ -72,6 +72,7 @@ function processFiles(files = [], options = {
 }) {
   const filesToUpload = processFiles(traverseDirectoryFiles(root), {
     getContentType: filename =>
+      // TODO: support more than just js/json
       filename.endsWith('json') ? 'application/json' : 'application/javascript',
     getPathname: filename => filename.replace(`${root}/`, ''),
     filter: filename => filename.endsWith('map') === false,

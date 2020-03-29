@@ -1,22 +1,16 @@
-import csp from './csp';
-import { graphqlEndpoint } from './endpoints';
+import contentSecurityPolicyBuilder from 'content-security-policy-builder';
 
-const corsOrigins = process.env.NODE_ENV === 'production'
-  ? ['cdn.chelsea.michaeltobia.com', 'api.chelsea.michaeltobia.com']
-  : ['localhost:3001', 'localhost:4000'];
-
-
-const provideStateConfig = {
-  graphqlEndpoint: {
-    server: graphqlEndpoint,
-    client: graphqlEndpoint,
-  },
-};
+import { corsOrigins, graphqlEndpoint, csp } from './config';
 
 const appConfig = {
-  csp,
+  csp: contentSecurityPolicyBuilder(csp),
   corsOrigins,
-  provideStateConfig,
+  provideStateConfig: {
+    graphqlEndpoint: {
+      server: graphqlEndpoint,
+      client: graphqlEndpoint,
+    },
+  },
   appCompatibility: '5.x.x',
 };
 

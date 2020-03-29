@@ -1,3 +1,11 @@
 export { default as appConfig } from './appConfig';
-
-export const moduleName = 'chelsea-root';
+export {
+  csp,
+  cdnUrl,
+  appUrl,
+  graphqlUrl,
+  corsOrigins,
+  graphqlEndpoint,
+  modulesEndpoint,
+  moduleName,
+} from './config';

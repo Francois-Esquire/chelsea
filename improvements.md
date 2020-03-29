@@ -12,14 +12,15 @@
 
 - ~~updating modules in local development requires building and re-serving, all the time?~~
 `npm run watch:build` or `bundle-module --watch`
-- `console.log`ging is removed, even on dev builds. Not cool. Add param to enable/disable
-to minifier and allow development to have this enabled by default
+- `console.log`ging is removed, even on dev builds :( maybe add param to enable/disable
+to terser and allow development to have this enabled, by default or config
 
 ## Configuration
 
-- Hardcoding config in source: cannot set ENV variables during builds,
+- ~~Hardcoding config in source: cannot set ENV variables during builds,
 forces things like hand written config to be exposed on public repositories
-(easily crawled and potential attack target).
+(easily crawled and potential attack target).~~ Can extend webpack config.
+-
 
 ## Lifecycle
 
@@ -35,6 +36,10 @@ also~~ does not render on client-side
 - ~~on failure, server hangs~~
 - on 404, error is not clear which route was hit
 - hydrate has limitations when rendering dynamic content (canvas)
+
+## Server
+
+- missing health route
 
 ## Generator
 
@@ -54,7 +59,7 @@ Possibe solution, don't treat the submodule as a workspace package
 
 ## Limitations
 
-- the ability to pass things like `Context.Consumer` is difficult between modules
+- the ability to pass things like `Context.Consumer` is difficult between modules without globals or common package
 
 ## Documentation
 

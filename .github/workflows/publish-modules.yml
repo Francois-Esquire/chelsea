@@ -22,6 +22,8 @@ jobs:
     - name: Build Modules
       env:
         NODE_ENV: production
+        APP_URL: ${{ secrets.APP_URL }}
+        CDN_URL: ${{ secrets.CDN_URL }}
       run: yarn workspaces run build
     - name: Publish Modules to Spaces
       env:

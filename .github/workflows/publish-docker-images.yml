@@ -5,7 +5,7 @@ on:
     types: [publish_docker_images]
 
 jobs:
-  deploy:
+  publish_docker_images:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -32,25 +32,40 @@ jobs:
     - name: Build Packages
       env:
         NODE_ENV: production
-      run: |
-        yarn workspaces run build
+      run: yarn workspaces run build
     - name: Publish GraphQL API to Registry
-      uses: Francois-Esquire/Publish-Docker-Github-Action@master
+      uses: docker/build-push-action@v1
+      env:
+        NODE_ENV: production
       with:
-        name: michaeltobia/chelsea-graphql-api
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: michaeltobia/chelsea-graphql-api
+        path: packages/api
         dockerfile: packages/api/Dockerfile
-        dockercontext:  packages/api
-    - name: Publish One App to Registry
-      uses: Francois-Esquire/Publish-Docker-Github-Action@master
-      with:
-        # TODO: pass args to image with holocron module map, target, etc
-        name: michaeltobia/one-app
+        build_args: join(["NODE_ENV"], ',')
+        tags: latest
+        tag_with_ref: true
+        tag_with_sha: true
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish One App to Registry
+      uses: docker/build-push-action@v1
+      env:
+        NODE_ENV: production
+        ONE_CONFIG_ENV: production
+        ONE_CLIENT_ROOT_MODULE_NAME: chelsea-root
+        ONE_CLIENT_REPORTING_URL: "${{ secrets.APP_URL }}/_"
+        ONE_CLIENT_CDN_URL: "${{ secrets.APP_URL }}/_/static/"
+        HOLOCRON_MODULE_MAP_URL: "${{ secrets.CDN_URL }}/module-map.json"
+      with:
+        # TODO: skip rebuild if sha is already tagged
+        repository: michaeltobia/one-app
+        path: packages/one-app
         dockerfile: packages/one-app/Dockerfile
-        dockercontext:  packages/one-app
-        # FIXME: tried to pull image, fails if does not exist
-        cache: true
-    # TODO: trigger job to deploy helm charts
+        build_args: join(["NODE_ENV","ONE_CONFIG_ENV","ONE_CLIENT_ROOT_MODULE_NAME","ONE_CLIENT_REPORTING_URL","ONE_CLIENT_CDN_URL","HOLOCRON_MODULE_MAP_URL"], ',')
+        target: production
+        tags: latest
+        tag_with_ref: true
+        tag_with_sha: true
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    # TODO: trigger job to deploy

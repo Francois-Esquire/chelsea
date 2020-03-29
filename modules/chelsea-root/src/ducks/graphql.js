@@ -7,6 +7,7 @@ import {
 } from 'iguazu-graphql';
 
 import {
+  graphqlUrl,
   moduleName,
 } from '../config';
 
@@ -20,7 +21,6 @@ export default graphqlReducer;
 
 export const endpointName = 'api-endpoint';
 export const graphqlStateKey = 'graphql';
-export const graphqlEndpoint = 'http://localhost:4000/graphql';
 
 export function configureIguazu() {
   configureIguazuGraphQL({
@@ -30,7 +30,7 @@ export function configureIguazu() {
   addGraphQLEndpoints([
     {
       name: endpointName,
-      fetch: () => ({ url: graphqlEndpoint }),
+      fetch: () => ({ url: graphqlUrl }),
     },
   ]);
 }

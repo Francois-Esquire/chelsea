@@ -7,7 +7,6 @@ one_app_static_path=packages/one-app/static/
 module_bundle_integrity_path=bundle.integrity.manifest.json
 module_build_base_path=build
 # module configuration
-# TODO: full URL (public path) needs to be included
 public_path="[one-app-dev-cdn-url]/static/modules"
 module_map_key="70alks1+fgh1a32gh43iashga35325jhsg9678jhg9m"
 
@@ -25,6 +24,10 @@ function set_module_map_key {
 function move_to_one_app_static {
 	rm -rf $one_app_static_path
 	mv $static_dir_path $one_app_static_path
+}
+
+function link_to_one_app_static {
+	ln -s $static_dir_path $one_app_static_path
 }
 
 function extract_module_bundle_sha {
@@ -86,7 +89,7 @@ function build_static_modules {
 			if [ $bundle_type = "legacyBrowser" ]
 			then
 				url="$module_public_path/$module_name.legacy.browser.js"
-				# for valid JSON, we set legacy as the final object to be written per module
+				# for valid JSON, we set legacy terminator as the final object to be written per module
 				terminator="}"
 			fi
 

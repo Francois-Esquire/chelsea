@@ -10,6 +10,7 @@ jobs:
     if: "! contains(toJSON(github.event.commits.*.msg), '[skip-ci]')"
     runs-on: ubuntu-latest
     steps:
+    # TODO: testing
     - name: Trigger Module Publishing
       uses: octokit/request-action@v2.x
       id: dispatch_publish_modules

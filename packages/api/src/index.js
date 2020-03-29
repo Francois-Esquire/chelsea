@@ -6,13 +6,29 @@ import context from './context';
 import schemaDirectives from './directives';
 
 const port = process.env.PORT || 4000;
+const dev = process.env.NODE_ENV === 'development';
 
 const server = new ApolloServer({
-  playground: true,
   typeDefs,
   resolvers,
-  context,
   schemaDirectives,
+  context,
+  cors: dev,
+  introspection: true,
+  playground: {
+    settings: {
+      'editor.theme': 'light',
+    },
+    tabs: [
+      {
+        query: `query\t{\n\tme\t{\n\t\tid\n\t}\n}`,
+      },
+    ],
+  },
+  onHealthCheck() {
+    // TODO: wait for db
+    return Promise.resolve();
+  },
 });
 
 server.listen(port).then(({ url }) => {
