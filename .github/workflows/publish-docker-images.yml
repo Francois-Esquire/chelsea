@@ -35,13 +35,11 @@ jobs:
       run: yarn workspaces run build
     - name: Publish GraphQL API to Registry
       uses: docker/build-push-action@v1
-      env:
-        NODE_ENV: production
       with:
-        repository: michaeltobia/chelsea-graphql-api
+        repository: ${{ secrets.DOCKER_IMAGE_GRAPHQL_API }}
         path: packages/api
         dockerfile: packages/api/Dockerfile
-        build_args: join(["NODE_ENV"], ',')
+        build_args: NODE_ENV=production
         tags: latest
         tag_with_ref: true
         tag_with_sha: true
@@ -49,23 +47,31 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish One App to Registry
       uses: docker/build-push-action@v1
-      env:
-        NODE_ENV: production
-        ONE_CONFIG_ENV: production
-        ONE_CLIENT_ROOT_MODULE_NAME: chelsea-root
-        ONE_CLIENT_REPORTING_URL: "${{ secrets.APP_URL }}/_"
-        ONE_CLIENT_CDN_URL: "${{ secrets.APP_URL }}/_/static/"
-        HOLOCRON_MODULE_MAP_URL: "${{ secrets.CDN_URL }}/module-map.json"
       with:
         # TODO: skip rebuild if sha is already tagged
-        repository: michaeltobia/one-app
+        repository: ${{ secrets.DOCKER_IMAGE_ONE_APP }}
         path: packages/one-app
         dockerfile: packages/one-app/Dockerfile
-        build_args: join(["NODE_ENV","ONE_CONFIG_ENV","ONE_CLIENT_ROOT_MODULE_NAME","ONE_CLIENT_REPORTING_URL","ONE_CLIENT_CDN_URL","HOLOCRON_MODULE_MAP_URL"], ',')
         target: production
+        build_args: |-
+          NODE_ENV=production,
+          ONE_CONFIG_ENV=production,
+          ONE_CLIENT_ROOT_MODULE_NAME=chelsea-root,
+          ONE_CLIENT_REPORTING_URL="${{ secrets.APP_URL }}/_",
+          ONE_CLIENT_CDN_URL="${{ secrets.APP_URL }}/_/static/",
+          HOLOCRON_MODULE_MAP_URL="${{ secrets.CDN_URL }}/module-map.json",
         tags: latest
         tag_with_ref: true
         tag_with_sha: true
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-    # TODO: trigger job to deploy
+    - name: Trigger Deployment
+      uses: octokit/request-action@v2.x
+      id: dispatch_deployment
+      with:
+        route: POST /repos/:repository/dispatches
+        repository: ${{ github.repository }}
+        mediaType: '{"previews": ["everest"]}'
+        event_type: "deploy_apps"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
