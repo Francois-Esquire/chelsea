@@ -53,13 +53,13 @@ jobs:
         path: packages/one-app
         dockerfile: packages/one-app/Dockerfile
         target: production
-        build_args: |-
+        build_args: >-0
           NODE_ENV=production,
           ONE_CONFIG_ENV=production,
           ONE_CLIENT_ROOT_MODULE_NAME=chelsea-root,
-          ONE_CLIENT_REPORTING_URL="${{ secrets.APP_URL }}/_",
-          ONE_CLIENT_CDN_URL="${{ secrets.APP_URL }}/_/static/",
-          HOLOCRON_MODULE_MAP_URL="${{ secrets.CDN_URL }}/module-map.json",
+          ONE_CLIENT_REPORTING_URL=${{ secrets.APP_URL }}/_,
+          ONE_CLIENT_CDN_URL=${{ secrets.APP_URL }}/_/static/,
+          HOLOCRON_MODULE_MAP_URL=${{ secrets.CDN_URL }}/module-map.json
         tags: latest
         tag_with_ref: true
         tag_with_sha: true
