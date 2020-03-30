@@ -64,13 +64,7 @@ jobs:
         dockerfile: packages/one-app/Dockerfile
         target: production
         labels: GIT_COMMIT=$REVISION
-        build_args:
-          - NODE_ENV=production
-          - ONE_CONFIG_ENV=production
-          - ONE_CLIENT_ROOT_MODULE_NAME=chelsea-root
-          - ONE_CLIENT_REPORTING_URL=$APP_URL/_
-          - ONE_CLIENT_CDN_URL=$APP_URL/_/static/
-          - HOLOCRON_MODULE_MAP_URL=$CDN_URL/module-map.json
+        build_args: NODE_ENV=production,ONE_CONFIG_ENV=production,ONE_CLIENT_ROOT_MODULE_NAME=chelsea-root,ONE_CLIENT_REPORTING_URL=$APP_URL/_,ONE_CLIENT_CDN_URL=$APP_URL/_/static/,HOLOCRON_MODULE_MAP_URL=$CDN_URL/module-map.json
         tags: latest
         tag_with_sha: true
         username: ${{ secrets.DOCKER_USERNAME }}
