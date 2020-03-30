@@ -52,7 +52,7 @@ jobs:
       env:
         APP_URL: ${{ secrets.APP_URL }}
         CDN_URL: ${{ secrets.CDN_URL }}
-        REVISION: ${{ printf `(git submodule | grep one-app)` | cut -d ' ' -f1 }}
+        REVISION: $(echo `(git submodule | grep one-app)` | cut -d ' ' -f1)
       with:
         repository: ${{ secrets.DOCKER_IMAGE_ONE_APP }}
         path: packages/one-app
