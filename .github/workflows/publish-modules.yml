@@ -7,10 +7,10 @@ on:
 jobs:
   publish_modules:
     runs-on: ubuntu-latest
-    env:
-      EQUAL: $([[ "$(git ls-tree HEAD~1 modules)" == "$(git ls-tree HEAD modules)" ]] && true || false)
-      # compare for change, only build if different
-    if: env.EQUAL != true
+    # env:
+    #   EQUAL: $([[ "$(git ls-tree HEAD~1 modules)" == "$(git ls-tree HEAD modules)" ]] && true || false)
+    #   # compare for change, only build if different
+    # if: env.EQUAL != true
 
     steps:
     - uses: actions/checkout@v2

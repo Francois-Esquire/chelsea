@@ -35,10 +35,10 @@ jobs:
       run: yarn workspaces run build
     - name: Publish GraphQL API to Registry
       uses: docker/build-push-action@v1
-      env:
-        EQUAL: $([[ "$(git ls-tree HEAD~1 packages/api)" == "$(git ls-tree HEAD packages/api)" ]] && true || false)
-        # compare for change, only build if different
-      if: env.EQUAL != true
+      # env:
+      #   EQUAL: $([[ "$(git ls-tree HEAD~1 packages/api)" == "$(git ls-tree HEAD packages/api)" ]] && true || false)
+      #   # compare for change, only build if different
+      # if: env.EQUAL != true
       with:
         repository: ${{ secrets.DOCKER_IMAGE_GRAPHQL_API }}
         path: packages/api
@@ -55,9 +55,9 @@ jobs:
         APP_URL: ${{ secrets.APP_URL }}
         CDN_URL: ${{ secrets.CDN_URL }}
         REVISION: $(echo `(git submodule | grep one-app)` | cut -d ' ' -f1)
-        EQUAL: $([[ "$(git ls-tree HEAD~1 packages/one-app)" == "$(git ls-tree HEAD packages/one-app)" ]] && true || false)
-        # compare for change, only build if different
-      if: env.EQUAL != true
+      #   EQUAL: $([[ "$(git ls-tree HEAD~1 packages/one-app)" == "$(git ls-tree HEAD packages/one-app)" ]] && true || false)
+      #   # compare for change, only build if different
+      # if: env.EQUAL != true
       with:
         repository: ${{ secrets.DOCKER_IMAGE_ONE_APP }}
         path: packages/one-app
