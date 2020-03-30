@@ -47,21 +47,27 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish One App to Registry
       uses: docker/build-push-action@v1
+      # compare for change, only build if different
+      # if: "$(git ls-tree HEAD~1 packages/one-app)" != "$(git ls-tree HEAD packages/one-app)"
+      env:
+        APP_URL: ${{ secrets.APP_URL }}
+        CDN_URL: ${{ secrets.CDN_URL }}
+        REVISION: ${{ printf `(git submodule | grep one-app)` | cut -d ' ' -f1 }}
       with:
-        # TODO: skip rebuild if sha is already tagged
         repository: ${{ secrets.DOCKER_IMAGE_ONE_APP }}
         path: packages/one-app
         dockerfile: packages/one-app/Dockerfile
         target: production
-        build_args: >-0
+        labels: >-
+          GIT_COMMIT=$REVISION
+        build_args: >-
           NODE_ENV=production,
           ONE_CONFIG_ENV=production,
           ONE_CLIENT_ROOT_MODULE_NAME=chelsea-root,
-          ONE_CLIENT_REPORTING_URL=${{ secrets.APP_URL }}/_,
-          ONE_CLIENT_CDN_URL=${{ secrets.APP_URL }}/_/static/,
-          HOLOCRON_MODULE_MAP_URL=${{ secrets.CDN_URL }}/module-map.json
+          ONE_CLIENT_REPORTING_URL=$APP_URL/_,
+          ONE_CLIENT_CDN_URL=$APP_URL/_/static/,
+          HOLOCRON_MODULE_MAP_URL=$CDN_URL/module-map.json
         tags: latest
-        tag_with_ref: true
         tag_with_sha: true
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
