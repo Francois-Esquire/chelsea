@@ -4,7 +4,7 @@ export const moduleName = 'chelsea-root';
 
 export const appUrl = process.env.NODE_ENV === 'production' ? process.env.APP_URL : 'http://localhost:3000';
 export const cdnUrl = process.env.NODE_ENV === 'production' ? process.env.CDN_URL : `http://localhost:${process.env.HTTP_ONE_APP_DEV_CDN_PORT || 3001}`;
-export const graphqlUrl = process.env.NODE_ENV === 'production' ? `${process.env.APP_URL}/graphql` : 'http://localhost:4000/graphql';
+export const graphqlUrl = process.env.NODE_ENV === 'production' ? `${appUrl}/graphql` : 'http://localhost:4000/graphql';
 
 export const corsOrigins = [removeProtocol(cdnUrl || '')];
 
@@ -19,7 +19,7 @@ export const csp = {
     scriptSrc: ["'self'", removeProtocol(cdnUrl)],
     imgSrc: ["'self'"],
     styleSrc: ["'self'", "'unsafe-inline'"],
-    connectSrc: ["'self'"].concat(corsOrigins),
+    connectSrc: ["'self'", graphqlUrl],
   },
 };
 

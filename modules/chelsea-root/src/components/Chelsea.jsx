@@ -40,7 +40,7 @@ Chelsea.defaultProps = {
 };
 
 Chelsea.childRoutes = () => [
-  <ModuleRoute moduleName="chelsea-hud">
+  <ModuleRoute path="/" moduleName="chelsea-hud">
     <ModuleRoute path="scene" moduleName="chelsea-scene" />
   </ModuleRoute>,
 ];
