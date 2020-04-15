@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "amex",
+    "plugin:prettier/recommended"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**",
+        "**/__mocks__/**",
+        "**/jest.*.js"
+      ],
+      "extends": "amex/test"
+    },
+    {
+      "files": ["**/*.{js,jsx}"],
+      "rules": {
+        "unicorn/prevent-abbreviations": "off"
+      }
+    }
+  ]
+}

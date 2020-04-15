@@ -5,7 +5,10 @@ import ModuleRoute from 'holocron-module-route';
 import Styles from './styles';
 
 export default function Chelsea({
-  children, moduleState, isLoading, loadedWithErrors,
+  children,
+  moduleState,
+  isLoading,
+  loadedWithErrors,
 }) {
   if (isLoading()) {
     return <p>Loading...</p>;

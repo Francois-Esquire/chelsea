@@ -8,39 +8,26 @@
     "build": "bundle-module",
     "clean": "rimraf build",
     "prepare": "npm run build",
-    "lint": "eslint --ignore-path .gitignore --ext js,jsx .",
-    "watch:build": "npm run build -- --watch",
+    "build:watch": "npm run build -- --watch",
     "test": "jest"
   },
   "dependencies": {
-    "@americanexpress/one-app-bundler": "^6.0.0",
-    "@americanexpress/one-app-router": "^1.0.0",
-    "content-security-policy-builder": "^2.1.0",
-    "holocron": "^1.0.0",
-    "ip": "^1.1.5",
-    "react": "^16.12.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
     "react-three-fiber": "^4.0.19",
-    "three": "^0.114.0"
+    "three": "^0.115.0"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.6",
+    "@americanexpress/one-app-bundler": "^6.0.0",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.2",
     "babel-preset-amex": "^3.2.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "enzyme-to-json": "^3.4.4",
-    "eslint": "^6.8.0",
-    "eslint-config-amex": "^11.1.0",
     "jest": "^25.1.0",
     "rimraf": "^3.0.0"
   },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "./enzyme.config.js"
-    ]
-  },
   "one-amex": {
     "bundler": {
-      "performanceBudget": 1200e3
+      "performanceBudget": 1200000
     }
   }
 }

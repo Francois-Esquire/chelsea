@@ -1,6 +1,8 @@
 require('@babel/polyfill');
 
-global.fetch = jest.fn(() => Promise.resolve({
+const response = {
   json: jest.fn(() => Promise.resolve({})),
   text: jest.fn(() => Promise.resolve('{}')),
-}));
+};
+
+global.fetch = jest.fn(() => Promise.resolve(response));

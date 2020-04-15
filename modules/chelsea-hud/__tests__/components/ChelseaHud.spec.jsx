@@ -1,10 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import ChelseaHud from '../../src/components/ChelseaHud';
 
 describe('ChelseaHud should render as expected', () => {
   it('module should render correct JSX', () => {
-    const renderedModule = shallow(<ChelseaHud />);
-    expect(renderedModule.find('div')).toMatchSnapshot();
+    const { asFragment } = render(<ChelseaHud />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

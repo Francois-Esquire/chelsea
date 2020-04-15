@@ -18,7 +18,7 @@ const players = new Map([
     username: 'player-3',
     topScore: 6756e45,
   },
-].map(player => [player.id, { ...player, __typename: typeNames.player }]));
+].map((player) => [player.id, { ...player, __typename: typeNames.player }]));
 
 function createPlayer(username) {
   return {
@@ -38,9 +38,9 @@ function getPlayer(userId) {
 }
 
 function addPlayer(username) {
-  const player = createPlayer(username);
+  const newPlayer = createPlayer(username);
   players.set(newPlayer.id, newPlayer);
-  return player;
+  return newPlayer;
 }
 
 function removePlayer(userId) {

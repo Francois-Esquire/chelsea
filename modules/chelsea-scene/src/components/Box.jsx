@@ -10,16 +10,18 @@ export default function Box(props) {
   const [active, setActive] = React.useState(false);
 
   // Rotate mesh every frame, this is outside of React without overhead
+  // eslint-disable-next-line no-return-assign, no-multi-assign
   useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.01));
 
   return (
     <mesh
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
       ref={mesh}
       scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]}
-      onClick={(e) => setActive(!active)}
-      onPointerOver={(e) => setHover(true)}
-      onPointerOut={(e) => setHover(false)}
+      onClick={e => setActive(!active)}
+      onPointerOver={e => setHover(true)}
+      onPointerOut={e => setHover(false)}
     >
       <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
       <meshStandardMaterial

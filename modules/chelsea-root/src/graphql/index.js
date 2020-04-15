@@ -1,9 +1,6 @@
 export { PlayerFragment } from './fragments';
 
-export {
-  PlayersQuery,
-  queryPlayers,
-} from './queries';
+export { PlayersQuery, queryPlayers } from './queries';
 
 export {
   AddPlayerMutation,

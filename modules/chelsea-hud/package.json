@@ -6,27 +6,21 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "bundle-module",
-    "watch:build": "npm run build -- --watch",
+    "build:watch": "npm run build -- --watch",
     "clean": "rimraf build",
     "prepare": "npm run build",
-    "test:lint": "eslint --ignore-path .gitignore --ext js,jsx,snap .",
-    "test:unit": "jest",
-    "test": "npm run test:lint && npm run test:unit"
+    "test": "jest"
   },
   "dependencies": {
-    "@americanexpress/one-app-router": "^1.0.0",
-    "holocron": "^1.0.0",
-    "react": "^16.12.0"
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1"
   },
   "devDependencies": {
     "@americanexpress/one-app-bundler": "^6.0.0",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.2",
     "amex-jest-preset-react": "^6.0.0",
-    "babel-eslint": "^8.2.6",
     "babel-preset-amex": "^3.2.0",
-    "enzyme": "^3.11.0",
-    "enzyme-to-json": "^3.4.4",
-    "eslint": "^6.8.0",
-    "eslint-config-amex": "^11.1.0",
     "jest": "^25.1.0",
     "rimraf": "^3.0.0"
   },

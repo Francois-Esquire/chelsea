@@ -21,7 +21,7 @@ const server = new ApolloServer({
     },
     tabs: [
       {
-        query: `query\t{\n\tme\t{\n\t\tid\n\t}\n}`,
+        query: 'query\t{\n\tme\t{\n\t\tid\n\t}\n}',
       },
     ],
   },

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChelseaHud should render as expected module should render correct JSX 1`] = `<DocumentFragment />`;
