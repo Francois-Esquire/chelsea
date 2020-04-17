@@ -25,12 +25,11 @@ jobs:
         NODE_ENV: development
       run: |
         yarn submodule-sync
-        yarn install --prefix packages/api
+        (cd packages/api && yarn install)
     - name: Build Packages
       env:
         NODE_ENV: production
-      run: |
-        yarn build --prefix packages/api
+      run: (cd packages/api && yarn build)
     - name: Publish GraphQL API to Registry
       uses: docker/build-push-action@v1
       # env:
