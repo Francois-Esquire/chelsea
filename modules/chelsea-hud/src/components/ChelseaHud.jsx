@@ -2,12 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function ChelseaHUD({ children }) {
-  // eslint-disable-next-line prettier/prettier
-  return (
-    <React.Fragment>
-      {children}
-    </React.Fragment>
-  );
+  return <React.Fragment>{children}</React.Fragment>;
 }
 
 ChelseaHUD.propTypes = {

@@ -6,7 +6,7 @@ import Styles from './styles';
 
 export default function Chelsea({
   children,
-  moduleState,
+  // moduleState,
   isLoading,
   loadedWithErrors,
 }) {
@@ -22,7 +22,7 @@ export default function Chelsea({
     <React.Fragment>
       <Styles />
 
-      <div>{JSON.stringify(moduleState, null, 2)}</div>
+      {/* <div>{JSON.stringify(moduleState, null, 2)}</div> */}
 
       {children}
     </React.Fragment>
@@ -43,7 +43,15 @@ Chelsea.defaultProps = {
 };
 
 Chelsea.childRoutes = () => [
-  <ModuleRoute path="/" moduleName="chelsea-hud">
-    <ModuleRoute path="scene" moduleName="chelsea-scene" />
-  </ModuleRoute>,
+  <ModuleRoute path="/*" moduleName="chelsea-scene" />,
+  // why do both not match?
+  <ModuleRoute path="/*" moduleName="chelsea-hud" />,
+  // why does this not work?
+  // <ModuleRoute path="/*" moduleName="chelsea-hud">
+  //   <ModuleRoute path="/*" moduleName="chelsea-scene" />
+  // </ModuleRoute>,
+  // or this?
+  // <ModuleRoute path="/" moduleName="chelsea-hud">
+  //   <ModuleRoute moduleName="chelsea-scene" />
+  // </ModuleRoute>,
 ];

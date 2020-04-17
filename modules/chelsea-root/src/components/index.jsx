@@ -34,5 +34,5 @@ export default compose(
     addPlayer,
     removePlayer,
     queryPlayers,
-  })
+  }),
 )(Chelsea);

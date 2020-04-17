@@ -3,5 +3,7 @@
     "modules/chelsea-hud/src",
     "modules/chelsea-scene/src",
     "modules/chelsea-root/src"
-  ]
+  ],
+  "globalImports": ["modules/chelsea-root/src/styles/globals.css"],
+  "publicUrl": "./"
 }
