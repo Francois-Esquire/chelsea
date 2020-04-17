@@ -103,5 +103,5 @@ function build_static_modules {
 	# remove last comma
 	modules=${modules%?}
 
-	echo "{ \"key\": \"$module_map_key\", \"modules\": { $modules } }" > $module_map_path
+	echo "{ \"clientCacheRevision\": \"$module_map_key\", \"modules\": { $modules } }" > $module_map_path
 }
