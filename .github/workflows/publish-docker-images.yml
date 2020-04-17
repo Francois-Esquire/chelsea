@@ -17,9 +17,6 @@ jobs:
         auth_header="$(git config --local --get http.https://github.com/.extraheader)"
         git submodule sync --recursive
         git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-    - name: Remove Modules
-      shell: bash
-      run: rm -rf modules
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
@@ -28,11 +25,12 @@ jobs:
         NODE_ENV: development
       run: |
         yarn submodule-sync
-        yarn
+        yarn install --prefix packages/api
     - name: Build Packages
       env:
         NODE_ENV: production
-      run: yarn workspaces run build
+      run: |
+        yarn build --prefix packages/api
     - name: Publish GraphQL API to Registry
       uses: docker/build-push-action@v1
       # env:
